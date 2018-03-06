@@ -1,0 +1,46 @@
+<launch>
+
+    <!-- Rosbag arguments -->
+    <arg name="frequency" default="1.0"/>
+    <arg name="pause"     default="false"/>
+
+    <!-- Source (only one true or none for real robot) -->
+    <arg name="bagfile"   default="true"/>
+    <arg name="simulator" default="false"/>
+
+    <!-- Bagfile (only used if bagfile true) -->
+    <arg name="dataset1" default="false"/>
+    <arg name="dataset2" default="false"/>
+    <arg name="dataset3" default="false"/>
+    <arg if="$(arg dataset1)" name="bfName" default="$(find probabilistic_basics)/bags/dataset1.bag"/>
+    <arg if="$(arg dataset2)" name="bfName" default="$(find probabilistic_basics)/bags/dataset2.bag"/>
+    <arg if="$(arg dataset3)" name="bfName" default="$(find probabilistic_basics)/bags/dataset3.bag"/>
+
+    <!-- Bagfile -->
+    <group if="$(arg bagfile)">
+        <!-- Use simulated time when working with bagfiles -->
+        <param name="use_sim_time" value="true" type="bool"/>
+        <group if="$(arg pause)">
+            <node pkg="rosbag" type="play" name="rosbag" args="$(arg bfName) --clock --pause -r $(arg frequency)"/>
+        </group>
+        <group unless="$(arg pause)">
+            <node pkg="rosbag" type="play" name="rosbag" args="$(arg bfName) --clock -r $(arg frequency)"/>
+        </group>
+    </group>
+   <group if="$(arg dataset2)">
+        <node pkg="tf" type="static_transform_publisher" name="camera_tf_broadcaster" args="-0.087 0.013 0 0 0 0 1 base_footprint camera_depth_frame 100"/>
+    </group>
+    <group unless="$(arg dataset2)">
+        <node pkg="tf" type="static_transform_publisher" name="camera_tf_broadcaster" args="0 0 0 0 0 0 1 base_footprint camera_depth_frame 100"/>
+<!--        <node pkg="tf" type="static_transform_publisher" name="odom_frame" args="0 0 0 0 0 0 world odom 100"/> -->
+    </group>
+
+    <!-- No bagfile -->
+    <group unless="$(arg bagfile)">
+        <!-- Simulation -->
+        <group if="$(arg simulator)">
+            <include file="$(find probabilistic_basics)/launch/gazebo.launch"/>
+        </group>
+    </group>
+
+</launch>

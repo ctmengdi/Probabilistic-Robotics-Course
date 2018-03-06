@@ -1,0 +1,13 @@
+*.pyc
+*.swp
+*.aux
+*.log
+*.gz
+*_solved*
+*.out
+*_old.py
+*_sol.py
+*_lab.py
+*~
+html/
+manifest.yaml

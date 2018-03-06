@@ -1,0 +1,17 @@
+<launch>
+
+    <!-- Bagfiles -->
+    <include file="$(find probabilistic_basics)/launch/basics.launch">
+	<arg name="dataset3" default="true"/>
+    </include>
+    
+    <!-- RViz -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find lab2_splitandmerge)/config/custom.rviz" output="screen"/>
+    
+    <!-- Split & Merge node-->
+    <include file="$(find lab2_splitandmerge)/launch/splitandmerge.launch"/>       
+
+    <!-- Odometry Node -->
+    <node pkg="lab2_splitandmerge" type="odometrynode.py" name="odometrynode" />
+
+</launch>

@@ -1,0 +1,5 @@
+<launch>
+    <!-- Split and merge -->
+    <node name="split_and_merge" pkg="lab2_splitandmerge" type="splitandmergenode.py" output="screen"/>
+
+</launch>

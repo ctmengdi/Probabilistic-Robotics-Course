@@ -1,0 +1,13 @@
+<launch>
+    <!-- Source data -->
+    <include file="$(find probabilistic_basics)/launch/basics.launch">
+        <arg name="dataset3" value="true"/>
+    </include>
+
+    <!-- Split & merge -->
+    <include file="$(find lab2_splitandmerge)/launch/splitandmerge.launch"/>
+
+    <!-- EKF node-->
+    <node pkg="lab4_ekf" type="node.py" name="ekf" output="screen"/>
+
+</launch>

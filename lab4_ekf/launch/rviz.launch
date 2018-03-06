@@ -1,0 +1,6 @@
+<launch>
+
+    <!-- RViz -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find lab4_ekf)/config/custom.rviz" output="screen"/>
+
+</launch>
